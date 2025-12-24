@@ -3,6 +3,7 @@ package stepdefinitions;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import pages.HomePage;
 import pages.LoginPage;
 import utils.BaseDriver;
 
@@ -12,11 +13,13 @@ public class LoginSteps {
 
     WebDriver driver;
     LoginPage loginPage;
+    HomePage homepage;
 
     @Given("User is on the login page")
     public void userIsOnLoginPage() {
         driver = BaseDriver.getDriver();
         loginPage = new LoginPage(driver);
+        homepage = new HomePage(driver);
         Assert.assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("mersys"));
     }
 
@@ -37,10 +40,7 @@ public class LoginSteps {
 
     @Then("User should be redirected to the homepage")
     public void userShouldBeRedirectedToHomepage() {
-//        Assert.assertTrue(
-//                loginPage.isHomePageDisplayed(),
-//                "Home page was not displayed after successful login"
-//        );
+        homepage.verifyHomePage("Student_10");
     }
 
     @Then("User should see error message {string} for {string}")

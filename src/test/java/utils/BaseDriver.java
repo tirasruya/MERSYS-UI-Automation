@@ -5,8 +5,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class BaseDriver {
+
+    private static final Logger LOGGER =
+            LogManager.getLogger(BaseDriver.class);
 
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     private static ThreadLocal<String> browserThread = new ThreadLocal<>();
@@ -15,17 +20,15 @@ public class BaseDriver {
 
     public static void setBrowser(String browser) {
         browserThread.set(browser);
+        LOGGER.info("Browser set to: {}", browser);
     }
 
     public static WebDriver getDriver() {
         if (driver.get() == null) {
             driver.set(createDriver(browserThread.get()));
         }
+        LOGGER.debug("Getting WebDriver instance for browser: {}", browserThread.get());
         return driver.get();
-    }
-
-    public static String getBrowser() {
-        return browserThread.get();
     }
 
     private static WebDriver createDriver(String browser) {
@@ -37,9 +40,13 @@ public class BaseDriver {
             browser = ConfigReader.getProperty("browser");
         }
 
+        LOGGER.info("Creating WebDriver for browser: {}", browser);
+        LOGGER.info("Headless mode: {}", headless);
+
         switch (browser.toLowerCase()) {
 
             case "chrome":
+                LOGGER.debug("Initializing ChromeDriver");
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
 
@@ -50,6 +57,7 @@ public class BaseDriver {
                 return new ChromeDriver(chromeOptions);
 
             case "firefox":
+                LOGGER.debug("Initializing FirefoxDriver");
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
 
                 if (headless) {
@@ -63,6 +71,7 @@ public class BaseDriver {
                 return firefoxDriver;
 
             default:
+                LOGGER.error("Unsupported browser requested: {}", browser);
                 throw new RuntimeException("Unsupported browser: " + browser);
         }
     }
@@ -73,5 +82,6 @@ public class BaseDriver {
             driver.remove();
         }
         browserThread.remove();
+        LOGGER.info("Quitting WebDriver");
     }
 }

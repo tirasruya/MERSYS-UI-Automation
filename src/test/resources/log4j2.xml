@@ -2,7 +2,7 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %highlight{%-5level} %logger{36} - %msg%n"/>
         </Console>
 
         <File name="File" fileName="target/logs/test-log.log" append="false">
@@ -11,7 +11,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Root>

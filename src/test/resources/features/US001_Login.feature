@@ -1,3 +1,5 @@
+@US001
+@login
 Feature: Login Feature
 
   As a student
@@ -7,22 +9,25 @@ Feature: Login Feature
   Background:
     Given User is on the login page
 
-  @smoke @login @positive
-  Scenario: Successful login with valid credentials
+  @TC101
+  @smoke
+  @positive
+  Scenario: User logs in successfully with valid student credentials
     When User enters username "Student_10" and password "S12345"
     And User clicks on login button
     Then User should be redirected to the homepage
 
-  @login @negative
-  Scenario Outline: Login attempt with invalid credentials
+  @TC102
+  @negative
+  Scenario Outline: User cannot log in with invalid or missing credentials
     When User enters username "<username>" and password "<password>"
     And User clicks on login button
     Then User should see error message "<expectedError>" for "<errorType>"
 
     Examples:
-      | username    | password  | expectedError         | errorType |
-      | wrongUser   | S12345    | error.validation      | login     |
-      | Student_10  | wrongPwd  | error.validation      | login     |
-      | wrongUser   | wrongPwd  | error.validation      | login     |
-      |             | S12345    | E-mail is required    | username  |
-      | Student_10  |           | Password is required  | password  |
+      | username   | password | expectedError                | errorType |
+      | wrongUser  | S12345   | Invalid username or password | login     |
+      | Student_10 | wrongPwd | Invalid username or password | login     |
+      | wrongUser  | wrongPwd | Invalid username or password | login     |
+      |            | S12345   | E-mail is required           | username  |
+      | Student_10 |          | Password is required         | password  |

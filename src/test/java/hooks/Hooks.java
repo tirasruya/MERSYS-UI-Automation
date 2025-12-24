@@ -25,6 +25,9 @@ public class Hooks {
 
     @Before
     public void setUp() {
+        LOGGER.info("Test starting | Browser: {} | Thread: {}",
+                ConfigReader.getProperty("browser"), Thread.currentThread().getName());
+        LOGGER.info("Navigating to URL: {}", ConfigReader.getProperty("baseUrl"));
 
         String browser = System.getProperty("browser");
         if (browser == null || browser.isEmpty()) {
@@ -55,7 +58,7 @@ public class Hooks {
             }
             LOGGER.info("Allure environment.properties has been created.");
         } catch (Exception e) {
-            LOGGER.error("Failed to create environment.properties.", e);
+            LOGGER.warn("Failed to create environment.properties.", e);
         }
     }
 
@@ -107,9 +110,16 @@ public class Hooks {
             }
 
         } catch (Exception e) {
-            LOGGER.error("Screenshot failed", e);
+            LOGGER.warn("Screenshot failed", e);
         } finally {
             BaseDriver.quitDriver();
+        }
+
+        LOGGER.info("Scenario finished: {}", scenario.getName());
+        LOGGER.info("Scenario status: {}", scenario.getStatus());
+
+        if (scenario.isFailed()) {
+            LOGGER.error("Scenario FAILED: {}", scenario.getName());
         }
     }
 }

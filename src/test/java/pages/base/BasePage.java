@@ -17,7 +17,7 @@ public class BasePage {
 
     protected final Logger LOGGER = LogManager.getLogger(this.getClass());
     WebDriver driver;
-    WebDriverWait wait;
+    public WebDriverWait wait;
 
     public BasePage(final WebDriver driver) {
         this.driver = driver;
@@ -29,18 +29,18 @@ public class BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(element));
         try {
             element.click();
-            LOGGER.debug("Element clicked");
+            LOGGER.debug("Clicked element: {}", element);
         } catch (Exception e1) {
             try {
                 new Actions(driver)
                         .moveToElement(element)
                         .click()
                         .perform();
-                LOGGER.debug("Element clicked with Actions");
+                LOGGER.debug("Element clicked with Actions: {}",element);
             } catch (Exception e2){
                 try {
                     ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-                    LOGGER.debug("Element clicked with Javascript");
+                    LOGGER.debug("Element clicked with Javascript: {}", element);
                 } catch (Exception e3) {
                     throw new RuntimeException("None of the click methods worked.");
                 }
@@ -53,7 +53,7 @@ public class BasePage {
         try {
             element.clear();
             element.sendKeys(text);
-            LOGGER.debug("Text sent to element");
+            LOGGER.debug("Text '{}' sent to element: {}", text, element);
         } catch (Exception e1) {
             try {
                 new Actions(driver)
@@ -62,22 +62,38 @@ public class BasePage {
                         .sendKeys(text)
                         .build()
                         .perform();
-                LOGGER.debug("Text sent to element with Actions");
+                LOGGER.debug("Text '{}' sent to element '{}' with Actions", text, element);
             } catch (Exception e2) {
                 try {
                     ((JavascriptExecutor) driver)
                             .executeScript("arguments[0].value = arguments[1];", element, text);
-                    LOGGER.debug("Text sent to element with Javascript");
+                    LOGGER.debug("Text '{}' sent to element '{}' with Javascript", text, element);
                 } catch (Exception e3) {
-                    throw new RuntimeException("All sendKeys operations failed.");
+                    LOGGER.error("Failed to click element using all methods", e3);
+                    throw new RuntimeException("None of the click methods worked.", e3);
                 }
             }
         }
-
     }
 
     public boolean isDisplayed(final WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
         return element.isDisplayed();
+    }
+
+    public void switchToNewTab() {
+        LOGGER.info("Waiting for new tab to open");
+
+        String currentWindow = driver.getWindowHandle();
+
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        for (String window : driver.getWindowHandles()) {
+            if (!window.equals(currentWindow)) {
+                driver.switchTo().window(window);
+                LOGGER.info("Switched to new tab");
+                break;
+            }
+        }
     }
 }
