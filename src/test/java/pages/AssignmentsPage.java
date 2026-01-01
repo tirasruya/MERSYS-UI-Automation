@@ -29,6 +29,28 @@ public class AssignmentsPage extends BasePage {
     private WebElement selectedTask;
     private WebElement selectedTaskRow;
 
+    @FindBy(css = "ms-search-button")
+    private WebElement searchButton;
+
+    @FindBy(xpath = "//mat-select[@role='combobox']//span[normalize-space()='Show All']")
+    private WebElement courseFilter;
+
+    @FindBy(xpath = "//mat-select[@role='combobox']//span[normalize-space()='Published']")
+    private WebElement statusFilter;
+
+    @FindBy(xpath = "//mat-datepicker-toggle/button/span[2]")
+    private WebElement semesterFilter;
+
+    @FindBy(xpath = "//mat-card/button[5]/span[2]")
+    private WebElement semesterDate;
+
+    @FindBy(xpath = "//button[@aria-haspopup='menu']/span/div/span[normalize-space()='Default View']")
+    private WebElement sortDropdown;
+
+    @FindBy(xpath = "//button[2]/span/span/span")
+    private WebElement showByClass;
+
+
     WebDriver driver = getDriver();
     Actions actions = new Actions(driver);
 
@@ -162,5 +184,44 @@ public class AssignmentsPage extends BasePage {
 
         int randomIndex = new Random().nextInt(submitIcons.size());
        clickElement(submitIcons.get(randomIndex));
+    }
+
+    public boolean isSearchButtonDisplayed() {
+        return isDisplayed(searchButton);
+    }
+
+    public boolean areFiltersDisplayed() {
+        return isDisplayed(courseFilter)
+                && isDisplayed(statusFilter)
+                && isDisplayed(semesterFilter);
+    }
+
+    public boolean isSortDropdownDisplayed() {
+        return isDisplayed(sortDropdown);
+    }
+
+    public void clickSearchButton() {
+        clickElement(searchButton);
+    }
+
+    public void filterByCourse() {
+        clickElement(courseFilter);
+    }
+
+    public void filterByStatus() {
+        clickElement(statusFilter);
+    }
+
+    public void filterBySemester() {
+        clickElement(semesterFilter);
+        clickElement(semesterDate);
+    }
+
+    public void openSortDropdown() {
+        clickElement(sortDropdown);
+    }
+
+    public void sortByCourse() {
+        clickElement(showByClass);
     }
 }
