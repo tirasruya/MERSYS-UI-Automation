@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import pages.HomePage;
 import utils.BaseDriver;
 
-public class HomeTopNavigationSteps {
+public class Home_TopNavigationSteps {
 
     WebDriver driver;
     HomePage homePage;

@@ -7,7 +7,7 @@ import org.testng.Assert;
 import pages.AssignmentsPage;
 import utils.BaseDriver;
 
-public class AssignmentsDiscussionSteps {
+public class Assignments_DiscussionSteps {
 
     WebDriver driver;
     AssignmentsPage assignmentsPage;

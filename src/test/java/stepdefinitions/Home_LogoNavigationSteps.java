@@ -8,7 +8,7 @@ import org.testng.Assert;
 import pages.HomePage;
 import utils.BaseDriver;
 
-public class HomeLogoNavigationSteps {
+public class Home_LogoNavigationSteps {
 
     WebDriver driver;
     HomePage homePage;

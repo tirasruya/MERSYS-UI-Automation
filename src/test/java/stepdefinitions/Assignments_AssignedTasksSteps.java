@@ -7,7 +7,7 @@ import pages.AssignmentsPage;
 import pages.HomePage;
 import utils.BaseDriver;
 
-public class AssignmentsAssignedTasksSteps  {
+public class Assignments_AssignedTasksSteps {
 
     WebDriver driver;
     HomePage homePage;
