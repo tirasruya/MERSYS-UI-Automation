@@ -1,6 +1,6 @@
 @US004
 @hamburgerMenu
-@navigation
+@Messaging
 Feature: HamburgerMenu - Messaging Management Functionality
 
   As a student,

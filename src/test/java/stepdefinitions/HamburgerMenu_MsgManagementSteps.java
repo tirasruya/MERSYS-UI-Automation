@@ -6,11 +6,14 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.HamburgerMenuPage;
 import utils.BaseDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.time.Duration;
 
 public class HamburgerMenu_MsgManagementSteps {
 
@@ -37,10 +40,17 @@ public class HamburgerMenu_MsgManagementSteps {
     @Then("the following sub-menu options should be visible:")
     public void verify_sub_menu_options(io.cucumber.datatable.DataTable dataTable) {
         LOGGER.info("Adım: Alt menü öğelerinin görünürlüğü doğrulanıyor.");
+
+        WebDriverWait wait = new WebDriverWait(BaseDriver.getDriver(), Duration.ofSeconds(15));
+
         Assert.assertTrue(hp.isDisplayed(hp.inbox));
         LOGGER.info("Görünürlük Doğrulandı: Inbox");
         Assert.assertTrue(hp.isDisplayed(hp.outbox));
         LOGGER.info("Görünürlük Doğrulandı: Outbox");
+
+        wait.until(ExpectedConditions.visibilityOf(hp.trash));
+        LOGGER.info("Trash öğesi görünür hale geldi.");
+
         Assert.assertTrue(hp.isDisplayed(hp.trash));
         LOGGER.info("Görünürlük Doğrulandı: Trash");
 
