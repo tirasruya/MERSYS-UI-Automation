@@ -20,7 +20,7 @@ Feature: US005 Messaging - Message Creation, Sending, and Outbox Control
     And the user should see and click the "Add Receiver(s)" icon
     When the user types "<searchKey>" in the receiver field
     Then the system should display the results for "<receiverType>"
-    And the user selects the first available receiver
+    And the user selects a random available receiver
     And the user enters a subject as "<subject>"
     And the user types "Otomasyon testi ile gönderilen mesaj içeriği." in the text editor
     And the user clicks on the "Send" button
@@ -28,7 +28,7 @@ Feature: US005 Messaging - Message Creation, Sending, and Outbox Control
 
     # Doğrulama Adımı: Outbox Kontrolü
     When the user clicks on the "Hamburger Menu" icon
-    And the user clicks on the "Outbox" link
+    And the user clicks on the "Messaging" link and then "Outbox" link
     Then the message with subject "<subject>" should be visible in the Outbox list
 
     Examples:

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+
 public class BasePage {
 
     protected final Logger LOGGER = LogManager.getLogger(this.getClass());
@@ -93,6 +94,16 @@ public class BasePage {
                 LOGGER.info("Switched to new tab");
                 break;
             }
+        }
+    }
+
+    public void wait(int second) {
+        try {
+            Thread.sleep(second * 1000L);
+        } catch (InterruptedException e) {
+            // İşlem kesilirse log at ve thread durumunu koru
+            LOGGER.error("Wait interrupted: ", e);
+            Thread.currentThread().interrupt();
         }
     }
 }
