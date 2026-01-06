@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import pages.base.BasePage;
+import utils.ConfigReader;
 
 public class LoginPage extends BasePage {
 
@@ -48,11 +49,12 @@ public class LoginPage extends BasePage {
     }
 
     public void loginAsStudent() {
-        String username = System.getenv("TEST_USERNAME");
-        String password = System.getenv("TEST_PASSWORD");
 
-        Assert.assertNotNull(username, "TEST_USERNAME is not set");
-        Assert.assertNotNull(password, "TEST_PASSWORD is not set");
+        String username = ConfigReader.getProperty("TEST_USERNAME");
+        String password = ConfigReader.getProperty("TEST_PASSWORD");
+
+        Assert.assertNotNull(username, "TEST_USERNAME is not set in config.properties");
+        Assert.assertNotNull(password, "TEST_PASSWORD is not set in config.properties");
 
         LOGGER.info("Logged in as user: {}", username);
 
