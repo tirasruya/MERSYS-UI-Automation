@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.base.BasePage;
 
+import java.util.List;
+
 public class ProfileFeaturePage extends BasePage {
 
     @FindBy(xpath= "//span[@class='username mr-12']")
@@ -27,6 +29,12 @@ public class ProfileFeaturePage extends BasePage {
 
     @FindBy(xpath = "//div[contains(text(),'Success') or contains(text(),'successfully')]")
     public WebElement successMessage;
+
+    @FindBy(css = "mat-select[formcontrolname='theme']")
+    public WebElement themeDropdown;
+
+    @FindBy(css = "mat-option span.mdc-list-item__primary-text")
+    public List<WebElement> themeOptions;
 
 
 
