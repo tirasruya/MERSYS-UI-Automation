@@ -50,18 +50,11 @@ public class LoginPage extends BasePage {
 
     public void loginAsStudent() {
 
-        System.out.println("DOSYADAN OKUNAN USERNAME: " + ConfigReader.getProperty("TEST_USERNAME"));
-
         String username = ConfigReader.getProperty("TEST_USERNAME");
         String password = ConfigReader.getProperty("TEST_PASSWORD");
-        //String username = System.getenv("TEST_USERNAME");
-        //String password = System.getenv("TEST_PASSWORD");
 
         Assert.assertNotNull(username, "TEST_USERNAME is not set in config.properties");
         Assert.assertNotNull(password, "TEST_PASSWORD is not set in config.properties");
-
-       // Assert.assertNotNull(username, "TEST_USERNAME is not set");
-        //Assert.assertNotNull(password, "TEST_PASSWORD is not set");
 
         LOGGER.info("Logged in as user: {}", username);
 
