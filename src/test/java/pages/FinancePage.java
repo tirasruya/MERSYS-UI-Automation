@@ -45,26 +45,16 @@ public class FinancePage extends BasePage {
 
     @FindBy(xpath = "//button[contains(@class,'mat-mdc-menu-trigger') and @aria-haspopup='menu']")
     private WebElement reportOptionsMenuBtn;
-    // Menü paneli (açık mı kontrolü için)
+
     private final By reportMenuPanel =
             By.cssSelector("div.mat-mdc-menu-panel");
 
-    // Excel / PDF butonları (VISIBLE olanı hedefle)
     private final By excelOptionBtn =
             By.xpath("//div[contains(@class,'mat-mdc-menu-panel')]//span[normalize-space()='Excel Export']/ancestor::button[1]");
 
     private final By pdfOptionBtn =
             By.xpath("//div[contains(@class,'mat-mdc-menu-panel')]//span[normalize-space()='Pdf Export']/ancestor::button[1]");
 
-
-
-    /*private final By excelOption =
-            By.xpath("//span[@class='mat-mdc-menu-item-text' and normalize-space()='Excel Export']/ancestor::button[1]");
-
-    private final By pdfOption =
-            By.xpath("//span[@class='mat-mdc-menu-item-text' and normalize-space()='Pdf Export']/ancestor::button[1]");
-
-*/
 
     public void verifyStudentFeePageOpened() {
         wait.until(d -> studentsFeesHeader.isDisplayed());
@@ -96,8 +86,6 @@ public class FinancePage extends BasePage {
         }
     }
 
-
-
     public void openReportOptionsMenu() {
         wait.until(ExpectedConditions.visibilityOf(reportOptionsMenuBtn));
 
@@ -108,12 +96,9 @@ public class FinancePage extends BasePage {
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", reportOptionsMenuBtn);
     }
-
-
     public void downloadReport(String type) {
         String t = type.trim().toLowerCase(Locale.ROOT);
 
-        // Menü açık değilse aç
         if (driver.findElements(reportMenuPanel).isEmpty()) {
             openReportOptionsMenu();
             wait.until(ExpectedConditions.presenceOfElementLocated(reportMenuPanel));

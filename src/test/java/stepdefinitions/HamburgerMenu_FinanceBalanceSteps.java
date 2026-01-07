@@ -25,15 +25,12 @@ public class HamburgerMenu_FinanceBalanceSteps {
     @Then("Student Fee page should be displayed")
     public void studentFeePageShouldBeDisplayed() {
         financePage.verifyStudentFeePageOpened();
-        // Eğer verify methodu PaymentPage’de ise:
-        // paymentPage.verifyStudentFeePageOpened();
     }
 
 
     @And("User clicks on Fee Balance Detail tab")
     public void userClicksOnFeeBalanceDetailTab() {
         paymentPage.clickFeeBalanceDetailTab();
-        // Eğer tab FinancePage'de ise: financePage.clickFeeBalanceDetailTab();
     }
 
     @Then("Installment table should be displayed")
